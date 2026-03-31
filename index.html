@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Threaded Tales</title>
+
+<!-- Tailwind & Lottie -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Custom Styles -->
+<style>
+.marquee {
+display: inline-block;
+padding-left: 100%;
+animation: scroll-marquee 15s linear infinite;
+white-space: nowrap;
+}
+
+@keyframes scroll-marquee {
+0% {
+transform: translateX(0%);
+}
+100% {
+transform: translateX(-100%);
+}
+}   
+
+.tango {
+font-family: 'Playfair Display', serif;
+font-weight: 700;
+font-size: 4rem;
+}
+
+.murray {
+font-family: 'Cormorant Garamond', serif;
+font-size: 1.5rem;
+display: block;
+margin-top: 0.2rem;
+}
+
+.hero-text {
+text-align: center;
+color: white;
+position: relative;
+z-index: 10;
+}
+
+.hero-bg {
+background-image: url('./images/hero-bg.png.png');
+background-size: 100%;
+background-position: center;
+background-repeat: no-repeat;
+}
+
+.hero-overlay {
+background-color: rgba(0, 0, 0, 0.3);
+position: absolute;
+inset: 0;
+z-index: 0;
+}
+
+@keyframes slideInLeft {
+0% { transform: translateX(-100%); opacity: 0; }
+100% { transform: translateX(0); opacity: 0.25; }
+}
+
+@keyframes slideInRight {
+0% { transform: translateX(100%); opacity: 0; }
+100% { transform: translateX(0); opacity: 0.25; }
+}
+
+.animate-slide-in-left {
+animation: slideInLeft 5s ease-out forwards;
+}
+
+.animate-slide-in-right {
+animation: slideInRight 5s ease-out forwards;
+}
+
+.fade-in-up {
+opacity: 0;
+transform: translateY(30px);
+transition: opacity 1s ease, transform 1s ease;
+}
+
+.fade-in-up.show {
+opacity: 1;
+transform: translateY(0);
+}
+.zoom:hover {
+transform: scale(1.2);
+transition: transform 0.3s ease;
+cursor: zoom-in;
+}
+ html {
+  scroll-behavior: smooth;
+}
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<style>
+  #launch-offer-popup {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+
+<body>
+<!-- Launch Offer Banner (Fixed Top Scrolling) -->
+<!-- Fixed Scrolling Banner (Dark Theme) -->
+<div class="fixed top-0 left-0 w-full bg-black text-yellow-400 z-50 overflow-hidden py-2">
+<div class="marquee whitespace-nowrap font-semibold text-lg">
+🎉 Launch Offer: Flat 50% Off on All Products for a Limited Time! 🎉 &nbsp;&nbsp;&nbsp;&nbsp;
+🎉 Launch Offer: Flat 50% Off on All Products for a Limited Time! 🎉 &nbsp;&nbsp;&nbsp;&nbsp;
+🎉 Launch Offer: Flat 50% Off on All Products for a Limited Time! 🎉 &nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</div>
+
+<!-- Launch Offer Popup -->
+<div id="launch-offer-popup" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 hidden">
+  <div class="bg-white rounded-lg p-6 max-w-sm text-center shadow-xl relative">
+    <button id="close-offer-popup" class="absolute top-2 right-3 text-gray-500 hover:text-black text-2xl">&times;</button>
+    
+    <img src="images/logo.jpeg" alt="Launch Offer" class="w-full h-48 object-cover rounded-lg mb-4">
+    
+    <h2 class="text-2xl font-bold mb-2 text-red-600">🎉 Launch Offer 🎉</h2>
+    <p class="text-lg mb-4">Flat <span class="font-bold text-red-500">50% OFF</span> on all products for a limited time!</p>
+    
+    <a href="#products" id="shop-now-btn"
+       class="bg-blue-900 hover:bg-white-500 text-white font-bold py-2 px-4 rounded-full">
+       🛍 Shop Now
+    </a>
+  </div>
+</div>
+
+<!-- Push down rest of page content -->
+<!-- Add margin-top to prevent content being hidden under fixed banner -->
+<div class="mt-12">
+<!-- Your main site content starts here -->
+</div>
+ <!-- 🧭 Top Catalogue Navigation -->
+   <!-- 🧭 Fixed Catalogue Nav (Centered Layout) -->
+<nav class="w-full bg-white shadow-md sticky top-10 z-40">
+  <div class="max-w-6xl mx-auto px-4 py-3 text-gray-800">
+    <div class="flex flex-col md:grid md:grid-cols-3 items-center text-base md:text-xl font-semibold gap-2 md:gap-0">
+
+      <!-- Left: Section Links -->
+      <div class="flex justify-center md:justify-start gap-4">
+        <a href="#our-story" class="hover:text-yellow-600 transition">Our Story</a>
+        <a href="#products" class="hover:text-yellow-600 transition">Our Products</a>
+        <a href="#artisans" class="hover:text-yellow-600 transition">Meet The Makers</a>
+      </div>
+
+      <!-- Center: Logo -->
+      <div class="flex flex-col items-center justify-center text-center mt-2 md:mt-0">
+        <img src="images/logo.jpeg" alt="Logo" class="h-10 mb-2" />
+        <span class="text-xs md:text-sm tracking-wide text-gray-600">THE THREADED TALES</span>
+      </div>
+
+      <!-- Right: Reviews, Contact, Cart -->
+      <div class="flex justify-center md:justify-end items-center gap-4 mt-2 md:mt-0">
+        <a href="#reviews" class="hover:text-yellow-600 transition">Reviews</a>
+        <a href="#contact" class="hover:text-yellow-600 transition">Contact</a>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- Hero Section -->
+<!-- Hero Section -->
+<section class="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center" style="background-image: url('images/hero-bg.png.png');">
+<div class="absolute inset-0 bg-black bg-opacity-30"></div>
+
+<div class="relative z-10 text-center px-4 text-white">
+<h1 class="tango text-4xl md:text-6xl mb-2 text-white">The Threaded Tales</h1>
+<span class="murray text-lg md:text-2xl block mb-4 text-white">by Elleganza Emporium</span>
+
+<!-- 🔥 Launch Offer + Timer -->
+<div class="mt-4 bg-red-600 text-white font-semibold text-sm px-4 py-2 rounded inline-block">
+🎉 Launch Offer: Flat 50% Off! Ends in <span id="countdown" class="font-bold"></span>
+</div>
+
+<a href="#products" class="mt-6 inline-block px-6 py-3 bg-white text-black rounded-full text-lg hover:bg-gray-200 transition">Shop Now</a>
+</div>
+</section>
+
+<!-- Our Story Section -->
+<section id="our-story" class="relative py-20 bg-white overflow-hidden">
+<img src="./images/our-story-1.jpg.jpg" class="absolute left-0 top-0 h-full w-1/2 object-cover opacity-20 animate-slide-in-left" />
+<img src="./images/our-story-2.jpg.jpg" class="absolute right-0 top-0 h-full w-1/2 object-cover opacity-20 animate-slide-in-right" />
+<div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+<h2 class="text-4xl tango mb-4">Our Story</h2>
+<p class="text-lg murray">
+Stitched every thread with care, our products are created using cruelty-free processes and organic dyes. Each piece is a story told by artisans committed to sustainability and elegance.
+</p>
+</div>
+</section>
+
+
+ <section id="shop-by-categories" class="py-12 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-10">SHOP BY CATEGORIES</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- Category Card -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg overflow-hidden">
+        <img src="images/Minimalist Grey.jpeg" alt="BEDSHEETS" class="w-full h-64 object-cover">
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-semibold">BEDSHEETS</h3>
+        </div>
+      </div>
+
+      <!-- Category Card -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg overflow-hidden">
+        <img src="images/Doormat1.jpeg" alt="DOORMATS & RUGS" class="w-full h-64 object-cover">
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-semibold">DOORMATS & RUGS</h3>
+        </div>
+      </div>
+
+      <!-- Category Card -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg overflow-hidden">
+        <img src="images/comfort1.jpeg" alt="COMFORTERS" class="w-full h-64 object-cover">
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-semibold">COMFORTERS</h3>
+        </div>
+      </div>
+
+      <!-- Category Card -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg overflow-hidden">
+        <img src="images/tissue1.jpeg" alt="Organizers" class="w-full h-64 object-cover">
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-semibold">Organizers</h3>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- Products -->
+<section class="py-16 px-6 md:px-20 bg-white" id="products">
+<div class="text-center mb-10">
+<h2 class="text-4xl font-semibold">Our Products</h2>
+<p class="text-gray-600 mt-2">Explore the collection</p>
+</div>
+ <div class="flex justify-end items-center gap-2 mb-4 px-4">
+  <label for="sort-select" class="text-sm font-medium text-gray-700">Sort by:</label>
+  <select id="sort-select" class="border border-gray-300 rounded px-2 py-1 text-sm">
+    <option value="default">Default</option>
+    <option value="price-asc">Price: Low to High</option>
+    <option value="price-desc">Price: High to Low</option>
+    <option value="name-asc">Name: A to Z</option>
+    <option value="name-desc">Name: Z to A</option>
+  </select>
+</div>
+<div id="product-grid" class="grid grid-cols-2 md:grid-cols-4 gap-0 border-4 border-gray-200"></div>
+</section>
+<!-- Cart Button + Modal -->
+<button id="cart-button" class="hidden fixed top-20 right-4 z-50 bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 shadow-lg border border-black">
+🛒 Cart (<span id="cart-count">0</span>)
+</button>
+
+<div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center">
+<div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+<button id="close-cart" class="absolute top-2 right-4 text-gray-500 hover:text-black text-xl">&times;</button>
+<h2 class="text-xl font-semibold mb-4">Your Cart</h2>
+<ul id="cart-items" class="mb-4 text-sm text-gray-700 space-y-2"></ul>
+ <div class="mb-4 p-2 text-sm text-gray-700 border-t border-gray-300">
+      <p>🚀 2–7 days fast delivery available across India</p>
+      <p>🛒 Free delivery on orders above ₹499</p>
+  </div>
+<!-- Updated Checkout Button -->
+<button id="checkout-btn" class="w-full bg-white text-black py-2 rounded border border-black hover:bg-gray-200 transition">
+Checkout on WhatsApp
+</button>
+</div>
+</div>
+<!-- 🧵 PRODUCT MODAL (DYNAMIC CONTENT INJECTED) -->
+<div id="product-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 hidden">
+<div id="modal-box" class="bg-white p-6 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+<!-- ❌ Modal Close -->
+<button id="modal-close" class="absolute top-2 right-2 text-gray-700 hover:text-red-600 text-2xl font-bold">&times;</button>
+<div id="modal-content"></div>
+</div>
+</div>
+ <div id="cart-toast" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-green-700 text-white px-4 py-2 rounded shadow-lg transition-opacity duration-500 opacity-0 z-50">
+  Added to Cart!
+</div>
+
+
+<!-- Artisans Section -->
+<section class="py-16 bg-gray-50 px-6 md:px-20" id="artisans">
+<div class="text-center mb-10">
+<h2 class="text-4xl font-semibold">Meet the Makers</h2>
+<p class="text-gray-600 mt-2">Stories from the loom</p>
+</div>
+<div class="max-w-4xl mx-auto space-y-10">
+<div class="fade-in-up">
+<img src="./images/artisan1.jpg" class="mx-auto w-full max-w-sm rounded-xl shadow-lg" />
+<p class="text-center text-gray-600 mt-4">
+Ravi specializes in handloom cotton, blending tradition with innovation of organic dyeing in our workshop.
+</p>
+</div>
+<div class="fade-in-up">
+<img src="./images/artisan2.jpg" class="mx-auto w-full max-w-sm rounded-xl shadow-lg" />
+<p class="text-center text-gray-600 mt-4">
+Lakshmi, a fourth-generation weaver from Bihar, revives ancient motifs through vibrant colors.
+</p>
+</div>
+<div class="text-center">
+</div>
+<p class="text-center text-xl font-semibold text-gray-800 mt-6">
+Our weavers come from generations of artisans, each thread woven with pride and tradition.
+</p>
+
+</div>
+</div>
+</section>
+
+<!-- Testimonials -->
+<section id="reviews" class="py-16 px-6 md:px-20">
+<div class="text-center mb-10">
+<h2 class="text-4xl font-semibold">Our Offline Customer's Love</h2>
+</div>
+<div class="grid md:grid-cols-3 gap-6">
+<div class="bg-white shadow-lg rounded-xl p-6 text-sm text-gray-700">“The quality is unmatched. It feels so special knowing this was organically dyed..”</div>
+<div class="bg-white shadow-lg rounded-xl p-6 text-sm text-gray-700">“Love the natural colors and the softness. Definitely buying more!”</div>
+<div class="bg-white shadow-lg rounded-xl p-6 text-sm text-gray-700">“Beautiful packaging and amazing story behind the products. Support local!”</div>
+</div>
+</section>
+
+ 
+
+<!-- Contact -->
+<!-- Contact Section -->
+<section id="contact" class="py-16 px-6 md:px-20 bg-white">
+<div class="text-center mb-10">
+<h2 class="text-4xl font-semibold">Get in Touch</h2>
+<p class="text-gray-600 mt-2">We’d love to hear from you!</p>
+</div>
+
+<form action="https://formspree.io/f/mrblbeoj" method="POST" class="max-w-xl mx-auto space-y-4">
+<input type="text" name="name" placeholder="Your Name" required class="w-full p-3 border rounded" />
+<input type="email" name="email" placeholder="Your Email" required class="w-full p-3 border rounded" />
+<textarea name="message" placeholder="Your Message" required class="w-full p-3 border rounded"></textarea>
+<button type="submit" class="bg-blue-900 hover:bg-blue-900 text-white px-4 py-2 rounded">
+Send Message
+</button>
+</form>
+
+<!-- Thank You Message -->
+<div id="thank-you" class="hidden text-green-600 font-semibold text-center mt-4">
+✅ Message sent successfully!
+</div>
+
+<!-- Error Message -->
+<div id="error-message" class="hidden text-red-600 font-semibold text-center mt-4">
+❌ Oops! Something went wrong. Please try again later.
+</div>
+
+<!-- Submission Script -->
+<script>
+const form = document.querySelector("form");
+const thankYou = document.getElementById("thank-you");
+const errorMessage = document.getElementById("error-message");
+
+form.addEventListener("submit", async (e) => {
+e.preventDefault();
+thankYou.classList.add("hidden");
+errorMessage.classList.add("hidden");
+
+const formData = new FormData(form);
+
+const res = await fetch(form.action, {
+method: "POST",
+body: formData,
+headers: {
+'Accept': 'application/json'
+}
+});
+
+if (res.ok) {
+form.reset();
+thankYou.classList.remove("hidden");
+} else {
+errorMessage.classList.remove("hidden");
+}
+});
+</script>
+</section>
+
+
+<!-- ✅ Updated Footer -->
+<footer class="bg-black text-white text-center py-6">
+  <p>© 2025 The Threaded Tales. All rights reserved.</p>
+ <footer class="bg-black text-white text-center py-6">
+  <p> For Support & Queries : elleganzaemporium@gmail.com</p>
+  <div class="mt-2 text-sm flex justify-center space-x-4">
+    <span>Follow us on</span>
+    <a href="https://www.instagram.com/elleganzaemporium?igsh=MWpiZWZneDdwYm51aQ==" class="underline hover:text-gray-400 transition" target="_blank" rel="noopener noreferrer">
+      Instagram
+    </a>
+    <span>|</span>
+    <a href="privacy-policy.html" class="underline hover:text-gray-400 transition">
+  Privacy Policy
+</a>
+  </div>
+</footer>
+
+<!-- ✅ Product Details Modal -->
+<div id="product-modal" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 hidden">
+  <div class="bg-white max-w-5xl w-full rounded-lg shadow-lg overflow-hidden relative">
+    <button id="modal-close" class="absolute top-2 right-4 text-gray-600 text-2xl hover:text-black">&times;</button>
+
+    <div id="modal-content" class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Left: Main Image and Thumbnails -->
+      <div class="flex flex-col space-y-4">
+        <div class="relative">
+          <img id="modal-main-image" src="" class="w-full rounded-lg object-cover max-h-[400px] mx-auto" />
+          <button id="modal-prev-image" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow hover:bg-gray-200">
+            &#10094;
+          </button>
+          <button id="modal-next-image" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow hover:bg-gray-200">
+            &#10095;
+          </button>
+        </div>
+        <div id="modal-thumbnails" class="flex overflow-x-auto space-x-2"></div>
+      </div>
+
+      <!-- Right: Product Info -->
+      <div>
+        <h2 id="modal-product-name" class="text-2xl font-bold mb-2"></h2>
+        <p id="modal-product-description" class="text-gray-800 mb-4"></p>
+
+        <div class="text-lg font-semibold text-green-600" id="modal-product-price"></div>
+        <div class="text-gray-500 line-through text-sm mb-3" id="modal-product-original-price"></div>
+
+        <ul class="text-sm space-y-1 mb-4">
+          <li><strong>Fabric:</strong> <span id="modal-fabric"></span></li>
+          <li><strong>Dimensions:</strong> <span id="modal-dimensions"></span></li>
+          <li><strong>Wash Care:</strong> <span id="modal-washcare"></span></li>
+        </ul>
+
+        <!-- ✅ Quantity Selector -->
+         <div class="flex items-center justify-start space-x-4 my-4">
+          <button id="decrease-qty" class="px-3 py-1 bg-gray-200 text-blue-600 text-xl rounded">-</button>
+          <span id="product-quantity" class="px-4 text-lg font-medium">1</span>
+          <button id="increase-qty" class="px-3 py-1 bg-gray-200 text-blue-600 text-xl rounded">+</button>
+        </div>
+
+        <button id="modal-add-to-cart" class="bg-blue-700 text-white px-6 py-2 rounded-md hover:bg-blue-800">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS for Products + Cart -->
+<script>
+let cart = [];
+let allProducts = []; 
+
+// ✅ Visibility toggle function
+function toggleCartVisibility() {
+  const cartModal = document.getElementById('cart-modal');
+  cartModal.classList.toggle('hidden');
+}
+
+// ✅ Update cart count display
+function updateCartCount() {
+  const cartCount = document.getElementById('cart-count'); // or your badge element
+  cartCount.textContent = cart.reduce((sum, p) => sum + p.qty, 0);
+}
+
+// ✅ Show/hide cart button based on items
+function updateCartButtonVisibility() {
+  const cartButton = document.getElementById('cart-button'); // replace with your ID
+  if (cart.length > 0) {
+    cartButton.classList.remove('hidden');
+  } else {
+    cartButton.classList.add('hidden');
+  }
+}
+function addToCart(product) {
+const existing = cart.find(p => p.name === product.name);
+if (existing) existing.qty += 1;
+else cart.push({ ...product, qty: 1 });
+updateCartCount();
+updateCartButtonVisibility(); // ✅ Show cart icon when there’s at least 1 item
+}
+
+function updateCartCount() {
+document.getElementById('cart-count').textContent = cart.reduce((a, b) => a + b.qty, 0);
+}
+
+function openCart() {
+document.getElementById('cart-modal').classList.remove('hidden');
+renderCart();
+}
+
+function closeCart() {
+document.getElementById('cart-modal').classList.add('hidden');
+}
+
+function renderCart() {
+const list = document.getElementById('cart-items');
+list.innerHTML = '';
+let total = 0;
+
+cart.forEach((item, index) => {
+total += item.price * item.qty;
+const li = document.createElement('li');
+li.innerHTML = `
+       <div class="flex justify-between items-center">
+         <div>
+           <p><strong>${item.name}</strong></p>
+           <p>₹${item.price} x ${item.qty} = ₹${item.price * item.qty}</p>
+           <div class="mt-2 space-x-2">
+             <button onclick="changeQty(${index}, -1)" class="px-2 py-1 bg-gray-200 rounded">-</button>
+             <button onclick="changeQty(${index}, 1)" class="px-2 py-1 bg-gray-200 rounded">+</button>
+             <button onclick="removeItem(${index})" class="ml-2 px-2 py-1 text-red-600">Remove</button>
+           </div>
+         </div>
+       </div>
+     `;
+list.appendChild(li);
+});
+
+const totalElem = document.createElement('li');
+totalElem.innerHTML = `<hr class="my-2" />
+     <p class="text-right font-semibold text-lg">Total: ₹${total}</p>`;
+list.appendChild(totalElem);
+}
+
+function changeQty(index, delta) {
+if (cart[index]) {
+cart[index].qty += delta;
+if (cart[index].qty <= 0) cart.splice(index, 1);
+updateCartCount();
+renderCart();
+}
+}
+
+function removeItem(index) {
+cart.splice(index, 1);
+updateCartCount();
+renderCart();
+}
+
+function checkoutOnWhatsApp() {
+const summary = cart.map(item => `${item.name} (x${item.qty})`).join('%0A');
+const url = `https://wa.me/918607115548?text=Hi%20Threaded%20Tales%2C%20I%20want%20to%20order:%0A${summary}`;
+window.open(url, '_blank');
+}
+
+document.getElementById('cart-button').addEventListener('click', openCart);
+document.getElementById('close-cart').addEventListener('click', closeCart);
+document.getElementById('checkout-btn').addEventListener('click', checkoutOnWhatsApp);
+
+document.getElementById("modal-close").addEventListener("click", () => {
+document.getElementById("product-modal").classList.add("hidden");
+document.getElementById("modal-content").innerHTML = "";
+});
+
+document.getElementById("product-modal").addEventListener("click", (e) => {
+if (e.target === document.getElementById("product-modal")) {
+document.getElementById("product-modal").classList.add("hidden");
+document.getElementById("modal-content").innerHTML = "";
+}
+});
+async function loadProducts() {
+  try {
+    const response = await fetch('./handloom_products.json');
+    const products = await response.json();
+    allProducts = products; // ✅ Added this
+    const grid = document.getElementById('product-grid');
+    grid.innerHTML = '';
+
+
+products.forEach((product, index) => {
+const { name, description, price: originalPrice, images = [], details = {} } = product;
+const discountedPrice = Math.floor(originalPrice * 0.5);
+const imageId = `product-image-${index}`;
+
+const card = document.createElement('div');
+card.className = 'bg-white border border-gray-200 overflow-hidden transform hover:scale-105 transition w-full';
+card.innerHTML = `
+  <div class="relative h-72 overflow-hidden">
+    <img src="${images[0]}" id="${imageId}" class="w-full h-full object-cover transition-all duration-300 ease-in-out" />
+  </div>
+  <div class="p-4">
+    <h3 
+      class="text-xl font-semibold cursor-pointer hover:underline"
+      onclick='openProductModal(${JSON.stringify(product)})'>
+      ${name}
+    </h3>
+    <div class="mt-3">
+      <div class="flex items-center space-x-2">
+        <span class="text-xl font-bold text-black">₹${discountedPrice}</span>
+        <span class="line-through text-gray-400">₹${originalPrice}</span>
+        <span class="text-green-600 font-semibold">50% off</span>
+      </div>
+      <span class="mt-1 inline-block text-xs font-semibold text-red-600 bg-red-100 px-2 py-0.5 rounded">Launch Offer🎉</span>
+    </div>
+    <button class="view-details mt-3 w-full px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition">View Details</button>
+    <button class="add-to-cart mt-2 w-full px-4 py-2 bg-blue-900 text-white rounded hover:bg-blue-950 transition">Add to Cart</button>
+  </div>
+`;
+
+
+card.querySelector('.add-to-cart').addEventListener('click', () => {
+   addToCart({ name, price: discountedPrice });
+   showAddToCartToast();
+});
+
+// 🆕 View Details button click = open modal
+card.querySelector('h3').addEventListener('click', () => {
+card.querySelector('.view-details').click();
+});
+
+// 🆕 View Details button click = open modal
+card.querySelector('.view-details').addEventListener('click', () => {
+const modal = document.getElementById('product-modal');
+const modalContent = document.getElementById('modal-content');
+let currentImageIndex = 0;
+
+function renderModalImage() {
+return `<img src="${images[currentImageIndex]}" 
+             id="main-modal-image"
+             class="w-full h-72 object-cover rounded transition-transform duration-300 cursor-zoom-in hover:scale-105" />`; // 🔍 zoom on hover
+}
+
+modalContent.innerHTML = `
+           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative">
+             <div>
+               <div class="relative">
+                 ${renderModalImage()}
+                
+                  <!-- 🔁 Left Arrow (points left) -->
+<button id="prev-img" class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-200 text-white rounded-full w-8 h-8 flex items-center justify-center shadow hover:bg-gray-300 transition">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+  </svg>
+</button>
+
+<!-- 🔁 Right Arrow (points right) -->
+<button id="next-img" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-200 text-white rounded-full w-8 h-8 flex items-center justify-center shadow hover:bg-gray-300 transition">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+  </svg>
+</button>
+
+               
+
+               </div>
+               <div class="flex mt-2 space-x-2 overflow-x-auto">
+                 ${images.map((img, i) => `<img src="${img}" class="w-20 h-20 object-cover rounded border hover:border-blue-600 cursor-pointer" onclick="document.getElementById('main-modal-image').src='${img}'; currentImageIndex=${i}" />`).join('')}
+               </div>
+             </div>
+             <div>
+               <h2 class="text-2xl font-bold">${name}</h2>
+               <p class="text-sm text-gray-600 mt-1">${description}</p>
+               <div class="mt-2 text-lg font-semibold text-green-700">₹${discountedPrice} <span class="text-sm text-gray-500 line-through ml-2">₹${originalPrice}</span></div>
+               <div class="mt-4 text-sm space-y-1">
+               <p><strong>Fabric:</strong> ${details.fabric || 'N/A'}</p>
+              <p><strong>Dimensions:</strong> ${details.dimensions || 'N/A'}</p>
+              <p><strong>Wash Care:</strong> ${details.washCare || 'N/A'}</p>
+
+              ${
+              details["Other Details"]
+              ? `<div><strong>Other Features:</strong><ul class="list-disc list-inside text-gray-600 mt-1">` +
+               details["Other Details"].split(',').map(item => `<li>${item.trim()}</li>`).join('') +
+              `</ul></div>`
+             : ''
+              }
+              </div>
+
+               <button class="add-to-cart mt-4 px-4 py-2 bg-blue-900 text-white rounded hover:bg-blue-950 transition">Add to Cart</button>
+             </div>
+           </div>
+         `;
+
+modal.classList.remove('hidden');
+
+// 🆕 Add to cart from modal
+modalContent.querySelector('.add-to-cart').addEventListener('click', () => {
+ addToCart({ name, price: discountedPrice });
+ showAddToCartToast(); 
+});
+
+// 🔁 Left/right arrow handlers
+modalContent.querySelector('#prev-img').addEventListener('click', () => {
+currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+document.getElementById('main-modal-image').src = images[currentImageIndex];
+});
+
+modalContent.querySelector('#next-img').addEventListener('click', () => {
+currentImageIndex = (currentImageIndex + 1) % images.length;
+document.getElementById('main-modal-image').src = images[currentImageIndex];
+});
+function showAddToCartToast() {
+  const toast = document.getElementById("cart-toast");
+  toast.classList.remove("opacity-0");
+  toast.classList.add("opacity-100");
+
+  setTimeout(() => {
+    toast.classList.remove("opacity-100");
+    toast.classList.add("opacity-0");
+  }, 2000); // Hide after 2 seconds
+}
+
+// ⛶ Fullscreen on image click
+modalContent.querySelector('#main-modal-image').addEventListener('click', () => {
+const img = document.getElementById('main-modal-image');
+if (img.requestFullscreen) img.requestFullscreen();
+});
+});
+
+// Hover slideshow on product card
+let interval;
+let currentImage = 0;
+card.addEventListener('mouseenter', () => {
+if (images.length > 1) {
+interval = setInterval(() => {
+currentImage = (currentImage + 1) % images.length;
+const img = document.getElementById(imageId);
+if (img) img.src = images[currentImage];
+}, 1000);
+}
+});
+card.addEventListener('mouseleave', () => {
+clearInterval(interval);
+const img = document.getElementById(imageId);
+if (img) img.src = images[0];
+});
+
+grid.appendChild(card);
+});
+} catch (err) {
+console.error("Failed to load products:", err);
+document.getElementById('product-grid').innerHTML = "<p class='text-center text-red-500'>Unable to load products. Please try again later.</p>";
+}
+}
+ 
+// ✅ Toast function
+function showAddToCartToast() {
+  const toast = document.getElementById("cart-toast");
+  toast.classList.remove("opacity-0");
+  toast.classList.add("opacity-100");
+
+  setTimeout(() => {
+    toast.classList.remove("opacity-100");
+    toast.classList.add("opacity-0");
+  }, 2000); // Hide after 2 seconds
+}
+window.addEventListener('DOMContentLoaded', loadProducts);
+</script>
+loadProducts();
+</script>
+<!-- Scroll Animation for Artisan Images -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.classList.add('show');
+}
+});
+}, {
+threshold: 0.2
+});
+
+document.querySelectorAll('.fade-in-up').forEach(el => {
+observer.observe(el);
+});
+</script>
+<script>
+ 
+// Set the deadline (change date as needed)
+const deadline = new Date("2025-08-08T23:59:59").getTime();
+
+const countdownInterval = setInterval(() => {
+const now = new Date().getTime();
+const distance = deadline - now;
+
+if (distance < 0) {
+clearInterval(countdownInterval);
+document.getElementById("countdown").textContent = "Offer Ended";
+return;
+}
+
+const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+document.getElementById("countdown").textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}, 1000);
+
+</script>
+<script>
+  // ✅ Modal close functionality
+  document.getElementById('modal-close').addEventListener('click', function () {
+    document.getElementById('product-modal').classList.add('hidden');
+  });
+
+  // ✅ Quantity increase/decrease logic
+document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('qty-increase')) {
+      const qtyInput = e.target.closest('.quantity-selector').querySelector('.qty-input');
+      let value = parseInt(qtyInput.value) || 1;
+      qtyInput.value = value + 1;
+    }
+
+    if (e.target.classList.contains('qty-decrease')) {
+      const qtyInput = e.target.closest('.quantity-selector').querySelector('.qty-input');
+      let value = parseInt(qtyInput.value) || 1;
+      if (value > 1) qtyInput.value = value - 1;
+    }
+  });
+</script>
+ <!-- ✅ Launch Offer Popup JS -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const popup = document.getElementById('launch-offer-popup');
+  const closeBtn = document.getElementById('close-offer-popup');
+  const shopNowBtn = document.getElementById("shop-now-btn");
+
+  // Show popup after 1 second
+  setTimeout(() => {
+    popup.classList.remove('hidden');
+  }, 1000);
+
+  // Close popup on click of close button
+  closeBtn.addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+// Close popup when clicking Shop Now
+  shopNowBtn.addEventListener("click", () => {
+    popup.classList.add("hidden");
+  });
+  // Close if clicking outside the box
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
+      popup.classList.add('hidden');
+    }
+  });
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
